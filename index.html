@@ -1410,6 +1410,127 @@ body:has(#cmpbar:not([hidden])) .wafab{bottom:calc(92px + env(safe-area-inset-bo
 .pc-buy .cmpl:active{transform:scale(.98)}
 @media (max-width:900px){.pc-buy .cmpl{flex-basis:100%;order:3}}
 .cmpl::before,.cmpl:has(input:checked)::before{content:none!important;display:none!important}
+
+/* speed test redesign */
+.st2{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:22px;align-items:stretch}
+@media (max-width:900px){.st2{grid-template-columns:1fr}}
+.gpanel{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 20px 22px;border-radius:28px;color:#fff;background:radial-gradient(120% 90% at 50% 0%,#17348f 0%,#0A2A78 45%,#071A4A 100%);box-shadow:0 30px 60px -28px rgba(5,15,60,.7)}
+.gpanel::before{content:"";position:absolute;inset:0;opacity:.35;pointer-events:none;background-image:linear-gradient(rgba(141,180,255,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(141,180,255,.2) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(ellipse at 50% 40%,#000 10%,transparent 70%)}
+.gwrap{position:relative;width:min(520px,100%)}
+.gauge{display:block;width:100%;height:auto;overflow:visible}
+.gcenter{position:absolute;left:0;right:0;top:56%;text-align:center;pointer-events:none}
+.gcenter .big{font-family:var(--display);font-weight:800;font-size:clamp(64px,13vw,112px);line-height:.95;font-variant-numeric:tabular-nums;letter-spacing:-.03em;text-shadow:0 0 30px rgba(79,134,255,.8)}
+.gcenter .unit{margin-top:4px;color:#C9D8FF;font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-size:13px}
+#stNeedle{transition:transform .5s cubic-bezier(.2,.9,.2,1.1);filter:drop-shadow(0 0 6px rgba(141,180,255,.9))}
+#stArc,#stArcGlow{transition:stroke-dasharray .5s cubic-bezier(.2,.9,.2,1)}
+.gring{transform-origin:150px 150px;animation:gSpin 40s linear infinite}
+.gpanel.run .gring{animation-duration:6s;stroke:rgba(141,180,255,.8)}
+@keyframes gSpin{to{transform:rotate(360deg)}}
+.gpanel.run .gglow{animation:gPulse 1s ease-in-out infinite alternate}
+@keyframes gPulse{from{opacity:.5}to{opacity:1}}
+.gphase{position:relative;display:inline-flex;align-items:center;gap:10px;padding:9px 18px;border-radius:99px;background:rgba(255,255,255,.1);border:1px solid rgba(141,180,255,.3);font-weight:700;font-size:14px;color:#E6EEFF;text-align:center}
+.gdot{width:9px;height:9px;border-radius:50%;background:#8DB4FF;flex:none}
+.gpanel.run .gdot{animation:gBlink .8s ease-in-out infinite;background:#4ADE80}
+@keyframes gBlink{50%{transform:scale(1.6);opacity:.5}}
+.gsteps{position:relative;list-style:none;margin:0;padding:0;display:flex;gap:10px;width:min(420px,100%);justify-content:space-between}
+.gsteps li{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:rgba(255,255,255,.5);transition:color .3s}
+.gsteps i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;font-style:normal;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.25);transition:all .3s}
+.gsteps li.on{color:#fff}.gsteps li.on i{background:#4F86FF;border-color:#fff;box-shadow:0 0 0 5px rgba(79,134,255,.35);animation:gBlink 1.2s ease-in-out infinite}
+.gsteps li.done{color:#C9D8FF}.gsteps li.done i{background:#fff;color:#10226B;border-color:#fff}
+.gsteps li.done i{font-size:0}.gsteps li.done i::after{content:"✓";font-size:14px;font-weight:800}
+.st2 .st-res{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.st2 .st-res>div{padding:16px;border-radius:18px;background:var(--surface);border:1.5px solid var(--line);transition:transform .25s,box-shadow .25s,border-color .25s}
+.st2 .st-res>div:hover{transform:translateY(-3px);border-color:var(--sky);box-shadow:0 14px 28px -18px rgba(36,71,217,.5)}
+.st2 .st-res span{display:flex;align-items:center;gap:8px;color:var(--blue)}
+.st2 .st-res b{display:block;margin-top:8px;font-size:34px;line-height:1}
+.st-verdict:not(:empty){padding:14px 16px;border-radius:14px;background:var(--blue-soft);color:var(--blue);animation:fgIn .4s ease both}
+.stgo{height:52px;padding:0 28px;border-radius:99px;font-size:16px;box-shadow:0 14px 26px -12px rgba(20,80,230,.8)}
+.stgo:not(:disabled){animation:stCta 2.4s ease-in-out infinite}
+@keyframes stCta{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+@media (prefers-reduced-motion:reduce){.gring,.gpanel.run .gglow,.gpanel.run .gdot,.gsteps li.on i,.stgo:not(:disabled){animation:none!important}#stNeedle,#stArc,#stArcGlow{transition:none}}
+.gside{align-content:start}
+.gcenter{top:61%}
+
+/* controls bar (button up top) + bike scene */
+.gctl{display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px;margin:0 0 18px}
+.gctl .stgo{height:56px;padding:0 34px;font-size:17px}
+.gsave{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px;color:var(--muted)}
+.gsave select{height:48px;border-radius:14px;border:1.5px solid var(--line-strong);background:var(--surface);padding:0 12px;font:inherit;font-weight:600;color:var(--ink);max-width:min(380px,70vw)}
+@media (max-width:600px){.gctl .stgo{width:100%}.gsave{width:100%;flex-direction:column;align-items:stretch;gap:6px}.gsave select{max-width:none;width:100%}.gctl #stReport{width:100%}}
+.road{position:relative;width:min(560px,100%);height:128px;overflow:hidden;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.08));border:1px solid rgba(141,180,255,.22)}
+.rsky{position:absolute;left:0;bottom:30px;width:200%;height:52px;opacity:.5;background:
+ linear-gradient(#8DB4FF,#8DB4FF) 0 100%/38px 24px no-repeat,
+ linear-gradient(#8DB4FF,#8DB4FF) 60px 100%/26px 44px no-repeat,
+ linear-gradient(#8DB4FF,#8DB4FF) 110px 100%/46px 32px no-repeat,
+ linear-gradient(#8DB4FF,#8DB4FF) 190px 100%/30px 50px no-repeat,
+ linear-gradient(#8DB4FF,#8DB4FF) 240px 100%/40px 28px no-repeat;background-size:38px 24px,26px 44px,46px 32px,30px 50px,40px 28px;background-repeat:repeat-x;opacity:.28;animation:rMove var(--sky,14s) linear infinite;animation-play-state:paused}
+.rsky.r2{bottom:30px;opacity:.16;transform:translateX(-30px);animation-duration:calc(var(--sky,14s)*1.6)}
+.rlane{position:absolute;left:0;right:0;bottom:0;height:36px;background:#06143A;border-top:2px solid rgba(255,255,255,.35)}
+.rlane::after{content:"";position:absolute;left:0;top:16px;width:200%;height:4px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.85) 0 28px,transparent 28px 58px);animation:rMove var(--road,3.2s) linear infinite;animation-play-state:paused}
+@keyframes rMove{to{transform:translateX(-50%)}}
+.bike{position:absolute;left:50%;bottom:12px;width:150px;height:auto;margin-left:-78px;overflow:visible;filter:drop-shadow(0 0 10px rgba(79,134,255,.6))}
+.bbody{transform-origin:34px 90px;transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+.gpanel.fast .bbody{transform:rotate(-7deg)}
+.wh{animation:whSpin var(--whl,.8s) linear infinite;animation-play-state:paused}
+@keyframes whSpin{to{transform:rotate(360deg)}}
+.blines,.beam{opacity:0;transition:opacity .3s}
+.gpanel.rolling .beam{opacity:.8}.gpanel.fast .blines{opacity:1;animation:bLine .35s linear infinite}
+@keyframes bLine{from{transform:translateX(6px)}to{transform:translateX(-10px)}}
+.gpanel.rolling .rsky,.gpanel.rolling .rlane::after,.gpanel.rolling .wh{animation-play-state:running}
+.gpanel.rolling .bbody{animation:bBob .5s ease-in-out infinite alternate}
+.gpanel.fast .bbody{animation:none}
+@keyframes bBob{to{transform:translateY(-2px)}}
+@media (prefers-reduced-motion:reduce){.rsky,.rlane::after,.wh,.gpanel.rolling .bbody,.blines{animation:none!important}}
+
+/* speed page layout */
+.sp-top{background:linear-gradient(180deg,#F4F8FF 0%,var(--bg) 100%);padding:34px 0 8px}
+.sp-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:34px;align-items:center}
+@media (max-width:900px){.sp-hero{grid-template-columns:1fr;gap:22px}.sp-top{padding-top:22px}}
+.sp-copy h1{font-size:clamp(30px,4.6vw,48px);line-height:1.1;margin:10px 0 12px}
+.sp-copy h1 span{position:relative;color:var(--blue);white-space:nowrap}
+.sp-copy h1 span::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:6px;border-radius:6px;background:var(--sky);opacity:.6;transform-origin:left;animation:spUnder 1.2s cubic-bezier(.2,.8,.2,1) .3s both}
+@keyframes spUnder{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.sp-lede{color:var(--muted);font-size:16px;max-width:52ch}
+.sp-chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px}
+.sp-chips span{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:99px;background:var(--surface);border:1.5px solid var(--line);font-size:13px;font-weight:700;color:var(--blue)}
+.sp-copy .gctl{margin:0 0 14px}
+.sp-note{max-width:52ch}
+.sp-hero .gpanel{width:100%}
+.sp-res{padding-top:18px;padding-bottom:10px}
+.sp4{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+@media (max-width:900px){.sp4{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+.sp-res .st-verdict{margin-top:14px}
+.sp-tipsec{padding-top:34px;padding-bottom:56px}
+.sp-tips{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:22px}
+@media (max-width:900px){.sp-tips{grid-template-columns:1fr;gap:34px}}
+.tipc{position:relative;background:var(--blue-soft);border:1px solid var(--line);border-radius:20px;padding:24px;display:grid;gap:8px;align-content:start;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s,border-color .3s}
+.tipc:hover{transform:translateY(-6px);border-color:var(--sky);box-shadow:0 18px 36px -18px rgba(36,71,217,.4)}
+.tipc .tn{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--blue);color:#fff}
+.tipc h3{font-size:18px;margin-top:8px}
+.tipc p{color:var(--muted);font-size:14.5px}
+.tipc:not(:last-child)::after{content:"";position:absolute;z-index:2;width:34px;height:34px;border-radius:50%;background:var(--blue) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M3 8h9.5M8.5 4l4 4-4 4' stroke='white' stroke-width='1.9' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat;box-shadow:0 0 0 5px var(--bg),0 8px 18px -6px rgba(36,71,217,.55);top:50%;right:-26px;margin-top:-17px}
+@media (max-width:900px){.tipc:not(:last-child)::after{top:auto;right:auto;left:50%;bottom:-27px;margin:0 0 0 -17px;transform:rotate(90deg)}}
+.sp-cta{margin-top:34px}
+/* WhatsApp button on the right */
+.wafab{left:auto;right:16px;flex-direction:row-reverse}
+.walbl{transform:translateX(8px)}
+@media (max-width:600px){.wafab{left:auto;right:12px}}
+
+.sp .st-res{display:grid;gap:12px}
+.sp .st-res>div{padding:16px;border-radius:18px;background:var(--surface);border:1.5px solid var(--line);transition:transform .25s,box-shadow .25s,border-color .25s}
+.sp .st-res>div:hover{transform:translateY(-3px);border-color:var(--sky);box-shadow:0 14px 28px -18px rgba(36,71,217,.5)}
+.sp .st-res span{display:flex;align-items:center;gap:8px;color:var(--blue)}
+.sp .st-res b{display:inline-block;margin-top:8px;font-size:34px;line-height:1}
+.sp .st-res small{display:inline}
+.sp .st-verdict:not(:empty){padding:14px 16px;border-radius:14px;background:var(--blue-soft);color:var(--blue)}
+
+.gwrap{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.gwrap:focus-visible{outline:3px solid #8DB4FF;outline-offset:6px;border-radius:24px}
+.gpanel.run .gwrap{cursor:progress}
+.gwrap:hover .gcenter .unit{color:#fff}
+.gpanel:not(.run) .gcenter .unit::after{content:" · tap to start";letter-spacing:.12em;opacity:.75;text-transform:none;font-size:11.5px}
+.gpanel{padding-bottom:26px}
+#gpanel{scroll-margin-top:96px}
 /* hero tagline: one line + word-by-word reveal */
 .hero h1.tag{white-space:nowrap;font-size:clamp(23px,3.45vw,48px);letter-spacing:-.02em}
 .hero h1.tag .w{display:inline-block;color:#fff;animation:wordLoop 6s cubic-bezier(.2,.8,.2,1) infinite both}
@@ -3912,29 +4033,93 @@ let stLast = null;
 async function renderSpeed() {
   const u = me(); let conns = [];
   if (u && u.role === "customer") { try { conns = (await API.myBookings()).filter(b => b.status === "installed"); } catch (e) {} }
-  app.innerHTML = `<div class="wrap dash">
-    <div class="dhead"><div><span class="eyebrow">Wi-Fi speed test</span><h1>How fast is your internet right now?</h1>
-      <p class="muted" style="max-width:62ch;margin-top:6px">Measures download, upload and ping from this phone or laptop over your Wi-Fi. To check the line speed without Wi-Fi, run a router test from your dashboard.</p></div></div>
-    <div class="st">
-      <div class="dial">
-        <svg viewBox="0 0 220 130" aria-hidden="true"><path d="M20 115 A90 90 0 0 1 200 115" fill="none" stroke="var(--line)" stroke-width="16" stroke-linecap="round"/><path id="stArc" d="M20 115 A90 90 0 0 1 200 115" fill="none" stroke="var(--blue)" stroke-width="16" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/><text x="20" y="128" font-size="10" fill="var(--muted)" text-anchor="middle">0</text><text x="110" y="16" font-size="10" fill="var(--muted)" text-anchor="middle">100</text><text x="200" y="128" font-size="10" fill="var(--muted)" text-anchor="middle">300+</text></svg>
-        <div class="big" id="stBig">0</div><div class="unit">Mbps</div><div class="phase" id="stPhase">Ready</div>
+  app.innerHTML = `<div class="sp">
+    <section class="sp-top"><div class="wrap sp-hero">
+      <div class="sp-copy">
+        <span class="eyebrow">Wi-Fi speed test</span>
+        <h1>How fast is your <span>internet</span> right now?</h1>
+        <p class="sp-lede">Measures download, upload and ping from this phone or laptop over your Wi-Fi. To check the line speed without Wi-Fi, run a router test from your dashboard.</p>
+        <div class="sp-chips"><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>About 30 seconds</span><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Free to use</span><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg>Phone or laptop</span></div>
+        <div class="gctl"><button class="btn btn-primary stgo" id="stGo" data-act="st-go" type="button">Start speed test</button>
+          ${conns.length ? `<label class="gsave" for="st-conn"><span>Save result to</span><select id="st-conn">${conns.map(b => `<option value="${b.id}">${esc(b.plan ? b.plan.provider.name + " · " + b.plan.name + " (" + b.plan.speed_mbps + " Mbps)" : b.ref_code)}</option>`).join("")}</select></label>` : ""}
+          <button class="btn btn-ghost" id="stReport" data-act="st-report" type="button" hidden>Report slow speed</button></div>
+        <p class="muted small sp-note">${u ? (conns.length ? "Results are saved to your connection so support can see them." : u.role === "customer" ? "Results are saved to your account." : "") : `<button class="linkbtn" data-act="login" type="button">Log in</button> to save results and report slow speed to support.`} The test uses Cloudflare's speed test servers.</p>
       </div>
-      <div style="min-width:0" class="stack">
-        <div class="st-res"><div><span>Download</span><b id="stDown">–</b><small>Mbps</small></div><div><span>Upload</span><b id="stUp">–</b><small>Mbps</small></div><div><span>Ping</span><b id="stPing">–</b><small>ms</small></div><div><span>Jitter</span><b id="stJit">–</b><small>ms</small></div></div>
-        <p class="st-verdict" id="stVerdict"></p>
-        ${conns.length ? field("st-conn", "Save result to", `<select id="st-conn">${conns.map(b => `<option value="${b.id}">${esc(b.plan ? b.plan.provider.name + " · " + b.plan.name + " (" + b.plan.speed_mbps + " Mbps)" : b.ref_code)}</option>`).join("")}</select>`) : ""}
-        <div class="row"><button class="btn btn-primary" id="stGo" data-act="st-go" type="button">Start speed test</button><button class="btn btn-ghost" id="stReport" data-act="st-report" type="button" hidden>Report slow speed</button></div>
-        <p class="muted small">${u ? (conns.length ? "Results are saved to your connection so support can see them." : u.role === "customer" ? "Results are saved to your account." : "") : `<button class="linkbtn" data-act="login" type="button">Log in</button> to save results and report slow speed to support.`} The test uses Cloudflare's speed test servers.</p>
+      <div class="gpanel" id="gpanel">
+        <div class="gwrap" data-act="st-go" role="button" tabindex="0" aria-label="Start speed test" title="Tap to start">
+          ${gaugeSvg()}
+          <div class="gcenter"><div class="big" id="stBig">0</div><div class="unit">Mbps</div></div>
+        </div>
+        <div class="gphase"><span class="gdot"></span><span id="stPhase">Ready · tap the dial to start</span></div>
+        <ol class="gsteps" id="gsteps"><li data-s="1"><i>1</i>Ping</li><li data-s="2"><i>2</i>Download</li><li data-s="3"><i>3</i>Upload</li></ol>
       </div>
-    </div>
-    <div class="steps3" style="margin-top:18px">
-      <div class="step"><span class="n">Tip 1</span><h3>Stay close to the router</h3><p>Walls and floors reduce Wi-Fi speed. Test in the same room first.</p></div>
-      <div class="step"><span class="n">Tip 2</span><h3>Pause other downloads</h3><p>Streaming, updates and other devices share the same connection.</p></div>
-      <div class="step"><span class="n">Tip 3</span><h3>Compare with the router test</h3><p>If the router test is fast but Wi-Fi is slow, the Wi-Fi setup needs attention, not the line.</p></div>
-    </div></div>`;
+    </div></section>
+    <section class="sec sp-res"><div class="wrap">
+      <div class="st-res sp4">
+        <div><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>Download</span><b id="stDown">–</b><small>Mbps</small></div>
+        <div><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V8M7 13l5-5 5 5M5 4h14"/></svg>Upload</span><b id="stUp">–</b><small>Mbps</small></div>
+        <div><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Ping</span><b id="stPing">–</b><small>ms</small></div>
+        <div><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3l2-6 4 12 3-9 2 3h4"/></svg>Jitter</span><b id="stJit">–</b><small>ms</small></div>
+      </div>
+      <p class="st-verdict" id="stVerdict"></p>
+    </div></section>
+    <section class="sec sp-tipsec"><div class="wrap">
+      <div class="sec-head"><span class="eyebrow">For an accurate result</span><h2>Three quick tips before you test</h2></div>
+      <div class="sp-tips">
+        <div class="tipc"><span class="tn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a14 14 0 0 1 18 0M6 13a9 9 0 0 1 12 0M9 17a4 4 0 0 1 6 0"/><circle cx="12" cy="20" r="1.2"/></svg></span><h3>Stay close to the router</h3><p>Walls and floors reduce Wi-Fi speed. Test in the same room first.</p></div>
+        <div class="tipc"><span class="tn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1.5"/><rect x="14" y="4" width="4" height="16" rx="1.5"/></svg></span><h3>Pause other downloads</h3><p>Streaming, updates and other devices share the same connection.</p></div>
+        <div class="tipc"><span class="tn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span><h3>Compare with the router test</h3><p>If the router test is fast but Wi-Fi is slow, the Wi-Fi setup needs attention, not the line.</p></div>
+      </div>
+      <div class="cbcard sp-cta"><span class="cbicon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg></span><div class="cbtext"><b>Not getting the speed you pay for?</b><span>Compare faster plans available at your address, or ask a partner to help you choose.</span></div><button class="btn btn-primary cbbtn" data-go="home" data-scroll="search" type="button">Compare plans<svg class="arr" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9.5M8.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    </div></section>
+  </div>`;
+  stInit();
 }
-function stDial(m) { const a = document.getElementById("stArc"); if (!a) return; const pct = Math.min(100, m <= 100 ? m / 2 : 50 + (Math.min(m, 300) - 100) / 4); a.setAttribute("stroke-dasharray", pct.toFixed(1) + " 100"); document.getElementById("stBig").textContent = Math.round(m); }
+const stPct = m => Math.min(100, m <= 100 ? m / 2 : 50 + (Math.min(m, 300) - 100) / 4);
+const stAng = pct => 135 + pct * 2.7;
+function gaugeSvg() {
+  const C = 150, pt = (r, pct) => { const a = stAng(pct) * Math.PI / 180; return [C + r * Math.cos(a), C + r * Math.sin(a)]; };
+  let ticks = "";
+  for (let k = 0; k <= 20; k++) { const pc = k * 5, big = [0, 12.5, 25, 50, 62.5, 75, 100].includes(pc) || k % 5 === 0, [x1, y1] = pt(big ? 92 : 98, pc), [x2, y2] = pt(106, pc); ticks += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="rgba(255,255,255,${big ? ".75" : ".3"})" stroke-width="${big ? 2.4 : 1.4}" stroke-linecap="round"/>`; }
+  const labels = [[0, 0], [25, 12.5], [50, 25], [100, 50], [150, 62.5], [200, 75], [300, 100]].map(([v, pc]) => { const [x, y] = pt(76, pc); return `<text x="${x.toFixed(1)}" y="${(y + 4).toFixed(1)}" font-size="11" font-weight="700" fill="rgba(255,255,255,.7)" text-anchor="middle">${v}</text>`; }).join("");
+  return `<svg class="gauge" viewBox="0 0 300 262" aria-hidden="true"><defs><linearGradient id="gGrad" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#8DB4FF"/><stop offset=".55" stop-color="#4F86FF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient><radialGradient id="gHub"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#8DB4FF"/></radialGradient><filter id="gGlow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5"/></filter></defs>
+    <circle class="gring" cx="150" cy="150" r="140" fill="none" stroke="rgba(141,180,255,.35)" stroke-width="1.5" stroke-dasharray="2 9" stroke-linecap="round"/>
+    <path d="M66.6 233.4 A118 118 0 1 1 233.4 233.4" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="16" stroke-linecap="round"/>
+    <path class="gglow" id="stArcGlow" d="M66.6 233.4 A118 118 0 1 1 233.4 233.4" fill="none" stroke="#4F86FF" stroke-width="16" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100" filter="url(#gGlow)"/>
+    <path id="stArc" d="M66.6 233.4 A118 118 0 1 1 233.4 233.4" fill="none" stroke="url(#gGrad)" stroke-width="16" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/>
+    ${ticks}${labels}
+    <g id="stNeedle" style="transform-origin:150px 150px;transform:rotate(-135deg)"><path d="M150 34 L156 150 L144 150 Z" fill="#fff"/><circle cx="150" cy="32" r="4.5" fill="#fff" stroke="#4F86FF" stroke-width="2"/></g>
+    <circle cx="150" cy="150" r="13" fill="url(#gHub)"/><circle cx="150" cy="150" r="5" fill="#10226B"/></svg>`;
+}
+let stShown = 0, stTw = 0, stTok = 0;
+function stBike(pct) {   // the rider speeds up with the reading
+  const g = document.getElementById("gpanel"); if (!g) return;
+  const k = Math.max(0, Math.min(1, pct / 100));
+  g.style.setProperty("--road", (3.2 - 2.7 * k).toFixed(2) + "s");
+  g.style.setProperty("--whl", (0.8 - 0.65 * k).toFixed(2) + "s");
+  g.style.setProperty("--sky", (14 - 10 * k).toFixed(1) + "s");
+  g.classList.toggle("rolling", pct > 0.5); g.classList.toggle("fast", pct > 45);
+}
+function stDial(m) {
+  const arc = document.getElementById("stArc"); if (!arc) return;
+  const pct = stPct(m), d = pct.toFixed(1) + " 100"; stBike(pct);
+  arc.setAttribute("stroke-dasharray", d); document.getElementById("stArcGlow").setAttribute("stroke-dasharray", d);
+  document.getElementById("stNeedle").style.transform = "rotate(" + (-135 + pct * 2.7) + "deg)";
+  cancelAnimationFrame(stTw); const el = document.getElementById("stBig"), from = stShown; let t0 = null;
+  const tick = t => { if (t0 === null) t0 = t; const k = Math.max(0, Math.min(1, (t - t0) / 420)), e = 1 - Math.pow(1 - k, 3); stShown = from + (m - from) * e; if (el) el.textContent = Math.round(stShown); if (k < 1) stTw = requestAnimationFrame(tick); };
+  stTw = requestAnimationFrame(tick);
+  const tok = ++stTok; setTimeout(() => { if (tok === stTok) { stShown = m; const b = document.getElementById("stBig"); if (b) b.textContent = Math.round(m); } }, 480);   // fallback if the tab was in the background
+}
+function stStep(text) {
+  const t = (text || "").toLowerCase(), n = t.includes("ping") || t.includes("connecting") ? 1 : t.includes("download") ? 2 : t.includes("upload") ? 3 : t.includes("complete") || t.includes("simulated result") ? 4 : 0;
+  document.querySelectorAll("#gsteps li").forEach(li => { const k = Number(li.dataset.s); li.classList.toggle("on", k === n); li.classList.toggle("done", n > k); });
+  const g = document.getElementById("gpanel"); if (g) g.classList.toggle("run", n >= 1 && n <= 3);
+}
+function stInit() {
+  const ph = document.getElementById("stPhase"); if (!ph) return;
+  new MutationObserver(() => stStep(ph.textContent)).observe(ph, { childList: true, characterData: true, subtree: true });
+  stShown = 0; setTimeout(() => { if (!document.getElementById("stArc")) return; stDial(300); setTimeout(() => stDial(0), 900); }, 350);   // intro sweep
+}
 const stF = (v, d) => (v == null || isNaN(v)) ? "–" : Number(v).toFixed(d == null ? 1 : d);
 function stVerdict(d) { if (d >= 100) return "Excellent. 4K streaming, gaming and work from home will run smoothly."; if (d >= 40) return "Good. HD streaming and video calls will work well."; if (d >= 10) return "Slow. Basic browsing works; streaming may buffer."; return "Very slow. Report it so a technician can check the connection."; }
 async function stFinish(r) {
@@ -3949,6 +4134,8 @@ async function stFinish(r) {
 }
 function stRun() {
   const $i = id => document.getElementById(id), go = $i("stGo");
+  if (!go || go.disabled) return;
+  const gp = $i("gpanel"); if (gp && window.matchMedia("(max-width:900px)").matches) gp.scrollIntoView({ behavior: "smooth", block: "start" });   // phones: bring the dial into view
   go.disabled = true; go.textContent = "Testing…"; $i("stReport").hidden = true; $i("stVerdict").textContent = ""; ["stDown", "stUp", "stPing", "stJit"].forEach(i => ($i(i).textContent = "–")); stDial(0);
   if (ST_PREVIEW) {
     let t = 0; const target = 70 + Math.random() * 40; $i("stPhase").textContent = "Checking download… (simulated)";
